@@ -1,0 +1,11 @@
+flask
+Pillow
+numpy
+opencv-python
+
+# Install one of the following depending on your model type:
+# tensorflow  (for Keras .h5 / SavedModel)
+# torch       (for PyTorch .pt)
+
+# Example install command:
+# pip install tensorflow

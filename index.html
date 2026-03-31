@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>{{ title }}</h1>
+        <p class="quote">{{ quote }}</p>
+        <p class="subtitle">Transparent Waste Sorting Vision System: classification of biodegradable and non-biodegradable waste</p>
+      </header>
+
+      <main>
+        {% if load_error %}
+        <div class="error">
+          <strong>Model load error:</strong>
+          <p>{{ load_error }}</p>
+        </div>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data">
+          <label class="file-label">
+            Choose an image to classify
+            <input type="file" name="image" accept="image/*" required />
+          </label>
+          <div class="actions">
+            <button type="submit" class="btn">Submit</button>
+          </div>
+        </form>
+
+        {% if img_url or gradcam_img_url %}
+        <div class="comparison">
+          {% if img_url %}
+          <div class="preview">
+            <h3>Uploaded image</h3>
+            <img src="{{ img_url }}" alt="uploaded image" />
+          </div>
+          {% endif %}
+
+          {% if gradcam_img_url %}
+          <div class="gradcam">
+            <h3>Grad-CAM Visualization</h3>
+            <img src="{{ gradcam_img_url }}" alt="Grad-CAM Heatmap" />
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+
+        {% if result %}
+        <div class="result">
+          <h3>Prediction</h3>
+          <p><strong>Label:</strong> {{ result.label }}</p>
+          <p><strong>Confidence:</strong> {{ result.prob }}</p>
+          {% if result.binary and result.raw_prob is defined %}
+          <p><small>Raw output: {{ result.raw_prob }}</small></p>
+          <p><small>(value ≥0.5 means {{ LABELS[1] }}, <0.5 means {{ LABELS[0] }})</small></p>
+          {% endif %}
+        </div>
+        {% endif %}
+      </main>
+
+      <footer>
+        <small>Built for transparent and explainable waste classification.</small>
+      </footer>
+    </div>
+  </body>
+</html>
