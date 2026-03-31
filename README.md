@@ -31,6 +31,3 @@ python app.py
 
 Open http://localhost:5000 in your browser, upload an image, and hit Submit.
 
-Notes
-- The loader attempts to load a Keras/TensorFlow model first, then PyTorch. If your model requires special preprocessing, update `preprocess_image` in `app.py`.
-- For explainability (Grad-CAM, saliency), I can add visual explanations if you want — tell me which framework your model uses.
